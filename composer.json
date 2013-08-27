@@ -1,0 +1,21 @@
+{
+    "name": "fitztrev/laravel-html-minify",
+    "description": "Minifies the HTML output of Laravel 4 applications",
+	"keywords": ["laravel", "l4", "html", "optimization", "performance", "compress", "minify", "minifier", "blade"],
+	"homepage": "https://github.com/fitztrev/laravel-html-minify",
+	"license": "MIT",
+    "authors": [
+        {
+            "name": "Trevor Fitzgerald",
+            "email": "fitztrev@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/view": "4.0.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Fitztrev\\LaravelHtmlMinify": "src/"
+        }
+    }
+}

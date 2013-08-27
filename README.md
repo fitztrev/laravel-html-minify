@@ -1,2 +1,2 @@
-laravel-html-minify
+Laravel HTML Minify
 ===================
