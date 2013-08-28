@@ -21,3 +21,29 @@ Test Page | w/o Gzip | w/ Gzip | w/ Gzip + Laravel HTML Minify
 2. Run `composer update`
 3. Add `Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider` to the list of providers in **app/config/app.php**.
 4. **Important:** You won't see any changes until you edit your `*.blade.php` template files. Once Laravel detects a change, it will recompile them, which is when this package will go to work. To force all views to be recompiled, just run this command: `find . -name "*.blade.php" -exec touch {} \;`
+
+## Disclaimers
+
+If you use either of the following practices in your views, it will not behave as intended.
+
+##### 1) Embedded `<script>` tags that use line breaks instead of semicolons to end a statement.
+
+*Example:*
+
+	<script type="text/javascript">
+		alert('hello')
+		alert('world')
+	</script>
+
+These will be combined into one line, breaking the javascript.
+
+##### 2) Input fields that rely on multiple spaces in their values.
+
+*Example:*
+
+	<input type="submit" value="     Submit     " />
+	<input type="text" value="spaces   in   the    value" />
+
+Multiple spaces will be removed, potentially causing formatting or other issues.
+
+However, if a view file contains a `<pre>` or `<textarea>` tag, this package ignores it and it will not be compressed. In those cases, whitespace is preserved and the view will render correctly.
