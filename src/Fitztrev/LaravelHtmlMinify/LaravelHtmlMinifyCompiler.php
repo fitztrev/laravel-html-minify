@@ -24,14 +24,12 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 		if ( !preg_match('/<(pre|textarea)/', $value) ) {
 			// Remove whitespace characters
 			$replace = array(
-				"/\n/", // New lines
-				"/\r/", // Carriage returns
-				"/\t/", // Tabs
-				"/ +/", // Multiple spaces
+				"/\n/" => '',  // New lines
+				"/\r/" => '',  // Carriage returns
+				"/\t/" => ' ', // Tabs
+				"/ +/" => ' ', // Multiple spaces
 			);
-			$value = preg_replace($replace, ' ', $value);
-			// Trim any whitespace from the beginning + end of file
-			$value = trim($value);
+			$value = preg_replace(array_keys($replace), array_values($replace), $value);
 		}
 		return $value;
 	}
