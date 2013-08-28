@@ -22,10 +22,14 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 		// First, check to make sure there are no <pre> or <textarea> blocks inside the view.
 		// If there are, we won't bother to compress this view.
 		if ( !preg_match('/<(pre|textarea)/', $value) ) {
-			// Remove line breaks, carriage returns, and tabs
-			$value = str_replace(array("\n", "\r", "\t"), ' ', $value);
-			// Replace multiple blank spaces with just one space
-			$value = preg_replace('/ +/', ' ', $value);
+			// Remove whitespace characters
+			$replace = array(
+				"/\n/", // New lines
+				"/\r/", // Carriage returns
+				"/\t/", // Tabs
+				"/ +/", // Multiple spaces
+			);
+			$value = preg_replace($replace, ' ', $value);
 			// Trim any whitespace from the beginning + end of file
 			$value = trim($value);
 		}
