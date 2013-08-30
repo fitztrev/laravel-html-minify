@@ -26,16 +26,21 @@ Test Page | w/o Gzip | w/ Gzip | w/ Gzip + Laravel HTML Minify
 
 If you use either of the following practices in your views, it will not behave as intended.
 
-##### 1) Embedded `<script>` tags that use line breaks instead of semicolons to end a statement.
+##### 1) Embedded `<script>` tags that either (a) use line breaks instead of semicolons to end a statement, or (b) use single-line comments `//`
 
 *Example:*
 
-	<script type="text/javascript">
-		alert('hello')
-		alert('world')
+	<script>
+		alert(1)
+		alert(2)
+	</script>
+	
+	<script>
+		// alert(3)
+		alert(4)
 	</script>
 
-These will be combined into one line, breaking the javascript.
+These blocks will be combined into one line, breaking the javascript. Alerts #1 + #2 would work if they ended with a semicolon. And alert #4 never shows because it gets appended to the comment on the previous line.
 
 ##### 2) Input fields that rely on multiple spaces in their values.
 
