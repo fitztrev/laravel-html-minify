@@ -12,6 +12,24 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 	}
 
 	/**
+	* We'll only compress a view if none of the following conditions are met.
+	*
+	* @param  string $value
+	* @return bool
+	*/
+	public function shouldMinify($value) {
+		if (
+			preg_match('/<(pre|textarea)/', $value)                     || // <pre> or <textarea> tags
+			preg_match('/<script[^>]*>[^<\/script>]/', $value)          || // Embedded javascript (opening <script> tag not immediately followed by </script>)
+			preg_match('/value=("|\')(.*)([ ]{2,})(.*)("|\')/', $value)    // Value attribute that contains 2 or more adjacent spaces
+		) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
 	* Compress the HTML output before saving it
 	*
 	* @param  string  $value
@@ -19,19 +37,20 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 	*/
 	protected function compileMinify($value)
 	{
-		// First, check to make sure there are no <pre> or <textarea> blocks inside the view.
-		// If there are, we won't bother to compress this view.
-		if ( !preg_match('/<(pre|textarea)/', $value) ) {
-			// Remove whitespace characters
-			$replace = array(
+		$replace = array(
+			'/<!--[^\[](.*?)[^\]]-->/' => '', // HTML comments (except IE conditional comments)
+		);
+
+		if ( $this->shouldMinify($value) ) {
+			$replace = array_merge($replace, array(
 				"/\n/" => '',  // New lines
 				"/\r/" => '',  // Carriage returns
 				"/\t/" => ' ', // Tabs
 				"/ +/" => ' ', // Multiple spaces
-			);
-			$value = preg_replace(array_keys($replace), array_values($replace), $value);
+			));
 		}
-		return $value;
+
+		return preg_replace(array_keys($replace), array_values($replace), $value);
 	}
 
 }
