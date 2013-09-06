@@ -164,6 +164,17 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->compiler->shouldMinify($string) );
 	}
 
+	public function testValueWithoutMultipleSpacesSingleWordSingleQuotes() {
+		$string = '<html>
+			<body>
+				<form>
+					<input type="submit" value=\'Submit\' />
+				</form>
+			</body>
+		</html>';
+		$this->assertTrue( $this->compiler->shouldMinify($string) );
+	}
+
 	public function testValueWithoutMultipleSpacesMultipleWords() {
 		$string = '<html>
 			<body>
@@ -180,6 +191,17 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 			<body>
 				<form>
 					<input type="submit" value="     Submit     " />
+				</form>
+			</body>
+		</html>';
+		$this->assertFalse( $this->compiler->shouldMinify($string) );
+	}
+
+	public function testValueWithMultipleSpacesSingleQuotes() {
+		$string = '<html>
+			<body>
+				<form>
+					<input type="submit" value=\'     Submit     \' />
 				</form>
 			</body>
 		</html>';
