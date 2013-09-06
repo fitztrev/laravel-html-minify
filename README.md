@@ -1,5 +1,7 @@
 # Laravel HTML Minify
 
+[![Build Status](https://travis-ci.org/fitztrev/laravel-html-minify.png)](https://travis-ci.org/fitztrev/laravel-html-minify)
+
 ## About
 
 This package compresses the HTML output from your Laravel 4 application, seamlessly reducing the overall response size of your pages.
