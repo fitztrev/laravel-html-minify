@@ -38,7 +38,7 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 	protected function compileMinify($value)
 	{
 		$replace = array(
-			'/<!--[^\[](.*?)[^\]]-->/' => '', // HTML comments (except IE conditional comments)
+			'/<!--[^\[](.*?)[^\]]-->/s' => '', // HTML comments (except IE conditional comments)
 		);
 
 		if ( $this->shouldMinify($value) ) {

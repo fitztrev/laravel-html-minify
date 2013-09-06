@@ -16,6 +16,9 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 			<body>
 				<!-- start content -->
 				<p>hello</p> <!-- greet the user -->
+				<!--
+					<p>old code that is commented out</p>
+				-->
 				<!-- end content -->
 			</body>
 		</html>';
