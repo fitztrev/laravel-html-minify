@@ -91,6 +91,16 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->compiler->shouldMinify($string) );
 	}
 
+	public function testSingleExternalScriptTagWithCacheBuster() {
+		$string = '<html>
+			<head>
+				<script type="text/javascript" src="script.<?php echo filemtime("script.js"); ?>.js"></script>
+			</head>
+		</html>
+		';
+		$this->assertTrue( $this->compiler->shouldMinify($string) );
+	}
+
 	public function testMultipleExternalScriptTag() {
 		$string = '<html>
 			<head>

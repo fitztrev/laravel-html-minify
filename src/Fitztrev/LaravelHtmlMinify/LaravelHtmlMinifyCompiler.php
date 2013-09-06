@@ -20,7 +20,7 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 	public function shouldMinify($value) {
 		if (
 			preg_match('/<(pre|textarea)/', $value)                     || // <pre> or <textarea> tags
-			preg_match('/<script[^>]*>[^<\/script>]/', $value)          || // Embedded javascript (opening <script> tag not immediately followed by </script>)
+			preg_match('/<script[^\??>]*>[^<\/script>]/', $value)       || // Embedded javascript (opening <script> tag not immediately followed by </script>)
 			preg_match('/value=("|\')(.*)([ ]{2,})(.*)("|\')/', $value)    // Value attribute that contains 2 or more adjacent spaces
 		) {
 			return false;
