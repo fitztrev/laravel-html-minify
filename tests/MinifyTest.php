@@ -181,7 +181,22 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				<p>hello</p>
 			</body>
 		</html>';
-		$this->assertTrue( $this->compiler->shouldMinify($string) );
+		$expected = '<html> <body> <p>hello</p> </body> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
+	}
+
+	public function testMultipleSpaces() {
+		$string = '<html>
+			<body>
+				<p>hello  with     random     spaces</p>
+			</body>
+		</html>';
+		$expected = '<html> <body> <p>hello with random spaces</p> </body> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 }
