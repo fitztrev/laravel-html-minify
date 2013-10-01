@@ -1,6 +1,7 @@
 # Laravel HTML Minify
 
 [![Build Status](https://travis-ci.org/fitztrev/laravel-html-minify.png)](https://travis-ci.org/fitztrev/laravel-html-minify)
+[![Total Downloads](https://poser.pugx.org/fitztrev/laravel-html-minify/downloads.png)](https://packagist.org/packages/fitztrev/laravel-html-minify)
 
 ## About
 
