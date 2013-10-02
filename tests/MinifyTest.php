@@ -234,4 +234,14 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $expected, $result );
 	}
 
+	public function testPHPTags() {
+		$string = '<?php
+echo "hello";
+?>';
+		$expected = '<?php echo "hello";?>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
+	}
+
 }

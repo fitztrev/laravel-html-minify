@@ -43,10 +43,11 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 
 		if ( $this->shouldMinify($value) ) {
 			$replace = array_merge($replace, array(
-				"/\n/" => '',  // New lines
-				"/\r/" => '',  // Carriage returns
-				"/\t/" => ' ', // Tabs
-				"/ +/" => ' ', // Multiple spaces
+				"/<\?php/" => '<?php ', // Opening PHP tags
+				"/\n/"     => '',       // New lines
+				"/\r/"     => '',       // Carriage returns
+				"/\t/"     => ' ',      // Tabs
+				"/ +/"     => ' ',      // Multiple spaces
 			));
 		}
 
