@@ -52,7 +52,14 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				<pre>hello</pre>
 			</body>
 		</html>';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		$expected = '<html>
+			<body>
+				<pre>hello</pre>
+			</body>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testPreTagWithClass() {
@@ -61,7 +68,14 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				<pre class="test">hello</pre>
 			</body>
 		</html>';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		$expected = '<html>
+			<body>
+				<pre class="test">hello</pre>
+			</body>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testTextareaTag() {
@@ -70,7 +84,14 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				<textarea>hello</textarea>
 			</body>
 		</html>';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		$expected = '<html>
+			<body>
+				<textarea>hello</textarea>
+			</body>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testTextareaTagWithAttributes() {
@@ -79,7 +100,14 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				<textarea rows="5" cols="5"">hello</textarea>
 			</body>
 		</html>';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		$expected = '<html>
+			<body>
+				<textarea rows="5" cols="5"">hello</textarea>
+			</body>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	/* *** */
@@ -89,9 +117,11 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 			<head>
 				<script type="text/javascript" src="script.js"></script>
 			</head>
-		</html>
-		';
-		$this->assertTrue( $this->compiler->shouldMinify($string) );
+		</html>';
+		$expected = '<html> <head> <script type="text/javascript" src="script.js"></script> </head> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testSingleExternalScriptTagWithCacheBuster() {
@@ -99,9 +129,11 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 			<head>
 				<script type="text/javascript" src="script.<?php echo filemtime("script.js"); ?>.js"></script>
 			</head>
-		</html>
-		';
-		$this->assertTrue( $this->compiler->shouldMinify($string) );
+		</html>';
+		$expected = '<html> <head> <script type="text/javascript" src="script.<?php echo filemtime("script.js"); ?>.js"></script> </head> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testMultipleExternalScriptTag() {
@@ -110,9 +142,11 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				<script type="text/javascript" src="script1.js"></script>
 				<script type="text/javascript" src="script2.js"></script>
 			</head>
-		</html>
-		';
-		$this->assertTrue( $this->compiler->shouldMinify($string) );
+		</html>';
+		$expected = '<html> <head> <script type="text/javascript" src="script1.js"></script> <script type="text/javascript" src="script2.js"></script> </head> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testExternalAndEmbeddedScriptTag() {
@@ -123,9 +157,18 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 					alert("ok");
 				</script>
 			</head>
-		</html>
-		';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		</html>';
+		$expected = '<html>
+			<head>
+				<script type="text/javascript" src="script.js"></script>
+				<script type="text/javascript">
+					alert("ok");
+				</script>
+			</head>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testGoogleAdSenseEmbedTag() {
@@ -170,9 +213,15 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 			<head>
 				<script>alert("ok");</script>
 			</head>
-		</html>
-		';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		</html>';
+		$expected = '<html>
+			<head>
+				<script>alert("ok");</script>
+			</head>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testEmbeddedScriptTagMultipleLines() {
@@ -183,9 +232,18 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 					alert("ok");
 				</script>
 			</head>
-		</html>
-		';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		</html>';
+		$expected = '<html>
+			<head>
+				<script>
+					alert("ok");
+					alert("ok");
+				</script>
+			</head>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	/* *** */
@@ -198,7 +256,10 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				</form>
 			</body>
 		</html>';
-		$this->assertTrue( $this->compiler->shouldMinify($string) );
+		$expected = '<html> <body> <form> <input type="submit" value="Submit" /> </form> </body> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testValueWithoutMultipleSpacesSingleWordSingleQuotes() {
@@ -209,7 +270,10 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				</form>
 			</body>
 		</html>';
-		$this->assertTrue( $this->compiler->shouldMinify($string) );
+		$expected = '<html> <body> <form> <input type="submit" value=\'Submit\' /> </form> </body> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testValueWithoutMultipleSpacesMultipleWords() {
@@ -220,7 +284,10 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				</form>
 			</body>
 		</html>';
-		$this->assertTrue( $this->compiler->shouldMinify($string) );
+		$expected = '<html> <body> <form> <input type="submit" value="Add Document" /> </form> </body> </html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testValueWithMultipleSpaces() {
@@ -231,7 +298,16 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				</form>
 			</body>
 		</html>';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		$expected = '<html>
+			<body>
+				<form>
+					<input type="submit" value="     Submit     " />
+				</form>
+			</body>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function testValueWithMultipleSpacesSingleQuotes() {
@@ -242,7 +318,16 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 				</form>
 			</body>
 		</html>';
-		$this->assertFalse( $this->compiler->shouldMinify($string) );
+		$expected = '<html>
+			<body>
+				<form>
+					<input type="submit" value=\'     Submit     \' />
+				</form>
+			</body>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
 	}
 
 	/* *** */
