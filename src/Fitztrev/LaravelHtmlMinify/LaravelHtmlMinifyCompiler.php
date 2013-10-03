@@ -37,21 +37,20 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler {
 	*/
 	protected function compileMinify($value)
 	{
-		$replace = array(
-			'/<!--[^\[](.*?)[^\]]-->/s' => '', // HTML comments (except IE conditional comments)
-		);
-
 		if ( $this->shouldMinify($value) ) {
-			$replace = array_merge($replace, array(
-				"/<\?php/" => '<?php ', // Opening PHP tags
-				"/\n/"     => '',       // New lines
-				"/\r/"     => '',       // Carriage returns
-				"/\t/"     => ' ',      // Tabs
-				"/ +/"     => ' ',      // Multiple spaces
-			));
+			$replace = array(
+				'/<!--[^\[](.*?)[^\]]-->/s' => '',       // HTML comments (except IE conditional comments)
+				"/<\?php/"                  => '<?php ', // Opening PHP tags
+				"/\n/"                      => '',       // New lines
+				"/\r/"                      => '',       // Carriage returns
+				"/\t/"                      => ' ',      // Tabs
+				"/ +/"                      => ' ',      // Multiple spaces
+			);
+			return preg_replace(array_keys($replace), array_values($replace), $value);
+		} else {
+			return $value;
 		}
 
-		return preg_replace(array_keys($replace), array_values($replace), $value);
 	}
 
 }

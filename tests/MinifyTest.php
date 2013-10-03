@@ -128,6 +128,43 @@ class MinifyTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->compiler->shouldMinify($string) );
 	}
 
+	public function testGoogleAdSenseEmbedTag() {
+		$string = '<html>
+			<body>
+				<script type="text/javascript"><!--
+					google_ad_client = "ca-pub-XXX";
+					/* faviconit */
+					google_ad_slot = "XXX";
+					google_ad_width = 300;
+					google_ad_height = 600;
+					//-->
+				</script>
+				<script type="text/javascript"
+					src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+				</script>
+			</body>
+		</html>';
+
+		$expected = '<html>
+			<body>
+				<script type="text/javascript"><!--
+					google_ad_client = "ca-pub-XXX";
+					/* faviconit */
+					google_ad_slot = "XXX";
+					google_ad_width = 300;
+					google_ad_height = 600;
+					//-->
+				</script>
+				<script type="text/javascript"
+					src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+				</script>
+			</body>
+		</html>';
+
+		$result = $this->compiler->compileString($string);
+		$this->assertEquals( $expected, $result );
+	}
+
 	public function testEmbeddedScriptTagSingleLine() {
 		$string = '<html>
 			<head>
