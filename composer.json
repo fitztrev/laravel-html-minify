@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "illuminate/view": "4.0.x"
+        "illuminate/view": "4.x"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
