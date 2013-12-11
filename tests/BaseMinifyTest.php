@@ -3,11 +3,21 @@
 use Mockery as m;
 use Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyCompiler;
 
-class MinifyTest extends PHPUnit_Framework_TestCase
+abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
 {
-    public function __construct()
+    private $config;
+
+    public function setUp()
     {
-        $this->compiler = new LaravelHtmlMinifyCompiler(m::mock('Illuminate\Filesystem\Filesystem'), __DIR__);
+        $this->config = array(
+            'enabled' => true,
+        );
+
+        $this->compiler = new LaravelHtmlMinifyCompiler(
+            $this->config,
+            m::mock('Illuminate\Filesystem\Filesystem'),
+            __DIR__
+        );
     }
 
     /* *** */
@@ -27,7 +37,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <body> <p>hello</p> </body> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testKeepConditionalComments()
@@ -44,7 +59,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <body> <!--[if IE 6]> <p>hello, IE6 user</p> <![endif]--> <!--[if IE 8]><p>hello, IE8 user</p><![endif]--> </body> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     /* *** */
@@ -129,7 +149,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <head> <script type="text/javascript" src="script.js"></script> </head> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testSingleExternalScriptTagWithCacheBuster()
@@ -142,7 +167,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <head> <script type="text/javascript" src="script.<?php echo filemtime("script.js"); ?>.js"></script> </head> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testMultipleExternalScriptTag()
@@ -156,7 +186,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <head> <script type="text/javascript" src="script1.js"></script> <script type="text/javascript" src="script2.js"></script> </head> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testExternalAndEmbeddedScriptTag()
@@ -274,7 +309,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <body> <form> <input type="submit" value="Submit" /> </form> </body> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testValueWithoutMultipleSpacesSingleWordSingleQuotes()
@@ -289,7 +329,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <body> <form> <input type="submit" value=\'Submit\' /> </form> </body> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testValueWithoutMultipleSpacesMultipleWords()
@@ -304,7 +349,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <body> <form> <input type="submit" value="Add Document" /> </form> </body> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testValueWithMultipleSpaces()
@@ -361,7 +411,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <body> <p>hello</p> </body> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testMultipleSpaces()
@@ -374,7 +429,12 @@ class MinifyTest extends PHPUnit_Framework_TestCase
         $expected = '<html> <body> <p>hello with random spaces</p> </body> </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
     public function testPHPTags()
@@ -385,7 +445,32 @@ echo "hello";
         $expected = '<?php echo "hello";?>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+
+        if ($this->config['enabled']) {
+            $this->assertEquals( $expected, $result );
+        } else {
+            $this->assertEquals( $string, $result );
+        }
     }
 
+}
+
+class EnabledTester extends BaseMinifyTester
+{
+}
+
+class DisabledTester extends BaseMinifyTester
+{
+    public function setUp()
+    {
+        $this->config = array(
+            'enabled' => false,
+        );
+
+        $this->compiler = new LaravelHtmlMinifyCompiler(
+            $this->config,
+            m::mock('Illuminate\Filesystem\Filesystem'),
+            __DIR__
+        );
+    }
 }
