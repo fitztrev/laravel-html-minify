@@ -4,12 +4,18 @@ use Illuminate\View\Compilers\BladeCompiler;
 
 class LaravelHtmlMinifyCompiler extends BladeCompiler
 {
-    public function __construct($files, $cachePath)
+    private $config;
+
+    public function __construct($config, $files, $cachePath)
     {
         parent::__construct($files, $cachePath);
 
+        $this->config = $config;
+
         // Add Minify to the list of compilers
-        $this->compilers[] = 'Minify';
+        if ($this->config['enabled'] === true) {
+            $this->compilers[] = 'Minify';
+        }
     }
 
     /**
