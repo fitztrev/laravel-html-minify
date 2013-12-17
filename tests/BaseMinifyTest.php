@@ -5,14 +5,10 @@ use Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyCompiler;
 
 abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
 {
-    private $config;
+    protected $config;
 
     public function setUp()
     {
-        $this->config = array(
-            'enabled' => true,
-        );
-
         $this->compiler = new LaravelHtmlMinifyCompiler(
             $this->config,
             m::mock('Illuminate\Filesystem\Filesystem'),
@@ -457,20 +453,30 @@ echo "hello";
 
 class EnabledTester extends BaseMinifyTester
 {
+    public function __construct()
+    {
+        $this->config = array(
+            'enabled' => true,
+        );
+    }
+
+    public function testConfigEnabled()
+    {
+        $this->assertEquals($this->config['enabled'], true);
+    }
 }
 
 class DisabledTester extends BaseMinifyTester
 {
-    public function setUp()
+    public function __construct()
     {
         $this->config = array(
             'enabled' => false,
         );
+    }
 
-        $this->compiler = new LaravelHtmlMinifyCompiler(
-            $this->config,
-            m::mock('Illuminate\Filesystem\Filesystem'),
-            __DIR__
-        );
+    public function testConfigDisabled()
+    {
+        $this->assertEquals($this->config['enabled'], false);
     }
 }
