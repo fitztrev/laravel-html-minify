@@ -4,32 +4,36 @@ use Illuminate\View\Compilers\BladeCompiler;
 
 class LaravelHtmlMinifyCompiler extends BladeCompiler
 {
-    private $config;
+    private $_config;
 
     public function __construct($config, $files, $cachePath)
     {
         parent::__construct($files, $cachePath);
 
-        $this->config = $config;
+        $this->_config = $config;
 
         // Add Minify to the list of compilers
-        if ($this->config['enabled'] === true) {
+        if ($this->_config['enabled'] === true) {
             $this->compilers[] = 'Minify';
         }
     }
 
     /**
     * We'll only compress a view if none of the following conditions are met.
+    * 1) <pre> or <textarea> tags
+    * 2) Embedded javascript (opening <script> tag not immediately followed
+    * by </script>)
+    * 3) Value attribute that contains 2 or more adjacent spaces
     *
-    * @param  string $value
+    * @param string $value the contents of the view file
+    *
     * @return bool
     */
     public function shouldMinify($value)
     {
-        if (
-            preg_match('/<(pre|textarea)/', $value)                     || // <pre> or <textarea> tags
-            preg_match('/<script[^\??>]*>[^<\/script>]/', $value)       || // Embedded javascript (opening <script> tag not immediately followed by </script>)
-            preg_match('/value=("|\')(.*)([ ]{2,})(.*)("|\')/', $value)    // Value attribute that contains 2 or more adjacent spaces
+        if (preg_match('/<(pre|textarea)/', $value)
+            || preg_match('/<script[^\??>]*>[^<\/script>]/', $value)
+            || preg_match('/value=("|\')(.*)([ ]{2,})(.*)("|\')/', $value)
         ) {
             return false;
         } else {
@@ -40,22 +44,25 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler
     /**
     * Compress the HTML output before saving it
     *
-    * @param  string  $value
+    * @param string $value the contents of the view file
+    *
     * @return string
     */
     protected function compileMinify($value)
     {
         if ( $this->shouldMinify($value) ) {
             $replace = array(
-                '/<!--[^\[](.*?)[^\]]-->/s' => '',       // HTML comments (except IE conditional comments)
-                "/<\?php/"                  => '<?php ', // Opening PHP tags
-                "/\n/"                      => '',       // New lines
-                "/\r/"                      => '',       // Carriage returns
-                "/\t/"                      => ' ',      // Tabs
-                "/ +/"                      => ' ',      // Multiple spaces
+                '/<!--[^\[](.*?)[^\]]-->/s' => '',
+                "/<\?php/"                  => '<?php ',
+                "/\n/"                      => '',
+                "/\r/"                      => '',
+                "/\t/"                      => ' ',
+                "/ +/"                      => ' ',
             );
 
-            return preg_replace(array_keys($replace), array_values($replace), $value);
+            return preg_replace(
+                array_keys($replace), array_values($replace), $value
+            );
         } else {
             return $value;
         }
