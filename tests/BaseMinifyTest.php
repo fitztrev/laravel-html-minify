@@ -35,9 +35,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -57,9 +57,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -79,7 +79,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     public function testPreTagWithClass()
@@ -96,7 +96,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     public function testTextareaTag()
@@ -113,7 +113,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     public function testTextareaTagWithAttributes()
@@ -130,7 +130,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     /* *** */
@@ -147,9 +147,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -165,9 +165,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -184,9 +184,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -210,7 +210,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     public function testGoogleAdSenseEmbedTag()
@@ -248,7 +248,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     public function testEmbeddedScriptTagSingleLine()
@@ -265,7 +265,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     public function testEmbeddedScriptTagMultipleLines()
@@ -288,7 +288,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     /* *** */
@@ -307,9 +307,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -327,9 +327,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -347,9 +347,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -371,7 +371,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     public function testValueWithMultipleSpacesSingleQuotes()
@@ -392,7 +392,7 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         </html>';
 
         $result = $this->compiler->compileString($string);
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     /* *** */
@@ -409,9 +409,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -427,9 +427,9 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
@@ -443,9 +443,9 @@ echo "hello";
         $result = $this->compiler->compileString($string);
 
         if ($this->config['enabled']) {
-            $this->assertEquals( $expected, $result );
+            $this->assertEquals($expected, $result);
         } else {
-            $this->assertEquals( $string, $result );
+            $this->assertEquals($string, $result);
         }
     }
 
