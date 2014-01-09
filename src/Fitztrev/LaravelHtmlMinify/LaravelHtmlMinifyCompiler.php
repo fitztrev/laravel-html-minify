@@ -50,7 +50,7 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler
     */
     protected function compileMinify($value)
     {
-        if ( $this->shouldMinify($value) ) {
+        if ($this->shouldMinify($value)) {
             $replace = array(
                 '/<!--[^\[](.*?)[^\]]-->/s' => '',
                 "/<\?php/"                  => '<?php ',
