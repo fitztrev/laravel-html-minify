@@ -54,8 +54,9 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler
             $replace = array(
                 '/<!--[^\[](.*?)[^\]]-->/s' => '',
                 "/<\?php/"                  => '<?php ',
-                "/\n/"                      => '',
+                "/\n([\S])/"                => ' $1',
                 "/\r/"                      => '',
+                "/\n/"                      => '',
                 "/\t/"                      => ' ',
                 "/ +/"                      => ' ',
             );

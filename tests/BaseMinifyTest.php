@@ -438,7 +438,23 @@ abstract class BaseMinifyTester extends PHPUnit_Framework_TestCase
         $string = '<?php
 echo "hello";
 ?>';
-        $expected = '<?php echo "hello";?>';
+        $expected = '<?php echo "hello"; ?>';
+
+        $result = $this->compiler->compileString($string);
+
+        if ($this->config['enabled']) {
+            $this->assertEquals($expected, $result);
+        } else {
+            $this->assertEquals($string, $result);
+        }
+    }
+
+    public function testNoIndentation()
+    {
+        $string = '<input
+type="text"
+name="myinput">';
+        $expected = '<input type="text" name="myinput">';
 
         $result = $this->compiler->compileString($string);
 
