@@ -473,6 +473,10 @@ class EnabledTester extends BaseMinifyTester
     {
         $this->config = array(
             'enabled' => true,
+            'blade' => array(
+                'contentTags' => array('{{', '}}'),
+                'escapedContentTags' => array('{{{', '}}}')
+            )
         );
     }
 
@@ -488,6 +492,10 @@ class DisabledTester extends BaseMinifyTester
     {
         $this->config = array(
             'enabled' => false,
+            'blade' => array(
+                'contentTags' => array('{{', '}}'),
+                'escapedContentTags' => array('{{{', '}}}')
+            )
         );
     }
 

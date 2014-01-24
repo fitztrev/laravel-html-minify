@@ -16,6 +16,18 @@ class LaravelHtmlMinifyCompiler extends BladeCompiler
         if ($this->_config['enabled'] === true) {
             $this->compilers[] = 'Minify';
         }
+
+        // Set Blade contentTags and escapedContentTags
+        $this->setContentTags(
+            $this->_config['blade']['contentTags'][0],
+            $this->_config['blade']['contentTags'][1]
+        );
+
+        $this->setEscapedContentTags(
+            $this->_config['blade']['escapedContentTags'][0],
+            $this->_config['blade']['escapedContentTags'][1]
+        );
+
     }
 
     /**
