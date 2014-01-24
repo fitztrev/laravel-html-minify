@@ -15,4 +15,15 @@
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <file>src/Fitztrev/LaravelHtmlMinify/LaravelHtmlMinifyCompiler.php</file>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="report/coverage" charset="UTF-8" yui="true" highlight="true"/>
+        <log type="coverage-clover" target="report/build/logs/clover.xml"/>
+    </logging>
 </phpunit>
