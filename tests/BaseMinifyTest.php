@@ -520,22 +520,22 @@ class DefaultContentTags extends BaseMinifyTester
 
     public function testDefaultContentTags()
     {
-		$string = '{{ "hello world" }}';
-		$expected = '<?php echo "hello world"; ?>';
+        $string = '{{ "hello world" }}';
+        $expected = '<?php echo "hello world"; ?>';
 
-		$result = $this->compiler->compileString($string);
+        $result = $this->compiler->compileString($string);
 
-		$this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testDefaultEscapedContentTags()
     {
-		$string = '{{{ "hello world" }}}';
-		$expected = '<?php echo e("hello world"); ?>';
+        $string = '{{{ "hello world" }}}';
+        $expected = '<?php echo e("hello world"); ?>';
 
-		$result = $this->compiler->compileString($string);
+        $result = $this->compiler->compileString($string);
 
-		$this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 }
 
@@ -554,21 +554,21 @@ class ChangedContentTags extends BaseMinifyTester
 
     public function testChangedContentTags()
     {
-		$string = '[[ "hello world" ]]';
-		$expected = '<?php echo "hello world"; ?>';
+        $string = '[[ "hello world" ]]';
+        $expected = '<?php echo "hello world"; ?>';
 
-		$result = $this->compiler->compileString($string);
+        $result = $this->compiler->compileString($string);
 
-		$this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testChangedEscapedContentTags()
     {
-		$string = '[[[ "hello world" ]]]';
-		$expected = '<?php echo e("hello world"); ?>';
+        $string = '[[[ "hello world" ]]]';
+        $expected = '<?php echo e("hello world"); ?>';
 
-		$result = $this->compiler->compileString($string);
+        $result = $this->compiler->compileString($string);
 
-		$this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 }
