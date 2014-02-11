@@ -504,3 +504,71 @@ class DisabledTester extends BaseMinifyTester
         $this->assertEquals($this->config['enabled'], false);
     }
 }
+
+class DefaultContentTags extends BaseMinifyTester
+{
+    public function __construct()
+    {
+        $this->config = array(
+            'enabled' => false,
+            'blade' => array(
+                'contentTags' => array('{{', '}}'),
+                'escapedContentTags' => array('{{{', '}}}')
+            )
+        );
+    }
+
+    public function testDefaultContentTags()
+    {
+		$string = '{{ "hello world" }}';
+		$expected = '<?php echo "hello world"; ?>';
+
+		$result = $this->compiler->compileString($string);
+
+		$this->assertEquals($expected, $result);
+    }
+
+    public function testDefaultEscapedContentTags()
+    {
+		$string = '{{{ "hello world" }}}';
+		$expected = '<?php echo e("hello world"); ?>';
+
+		$result = $this->compiler->compileString($string);
+
+		$this->assertEquals($expected, $result);
+    }
+}
+
+class ChangedContentTags extends BaseMinifyTester
+{
+    public function __construct()
+    {
+        $this->config = array(
+            'enabled' => false,
+            'blade' => array(
+                'contentTags' => array('[[', ']]'),
+                'escapedContentTags' => array('[[[', ']]]')
+            )
+        );
+    }
+
+    public function testChangedContentTags()
+    {
+		$string = '[[ "hello world" ]]';
+		$expected = '<?php echo "hello world"; ?>';
+
+		$result = $this->compiler->compileString($string);
+
+		$this->assertEquals($expected, $result);
+    }
+
+    public function testChangedEscapedContentTags()
+    {
+		$string = '[[[ "hello world" ]]]';
+		$expected = '<?php echo e("hello world"); ?>';
+
+		$result = $this->compiler->compileString($string);
+
+		$this->assertEquals($expected, $result);
+    }
+}
