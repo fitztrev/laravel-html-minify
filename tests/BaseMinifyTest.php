@@ -459,7 +459,7 @@ name="myinput">';
 </p>';
 
         $result = $this->compiler->compileString($string);
-		$this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
 }
