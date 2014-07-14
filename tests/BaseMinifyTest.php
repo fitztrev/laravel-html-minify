@@ -449,6 +449,19 @@ name="myinput">';
         }
     }
 
+    public function testSkipMinification()
+    {
+        $string = '<p>
+<!-- skipmin -->
+</p>';
+        $expected = '<p>
+<!-- skipmin -->
+</p>';
+
+        $result = $this->compiler->compileString($string);
+		$this->assertEquals($expected, $result);
+    }
+
 }
 
 class EnabledTester extends BaseMinifyTester
