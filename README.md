@@ -40,6 +40,11 @@ If you are using a javascript framework that conflicts with Blade's tags, you ca
 - **`blade.contentTags`** - *array*, default `{{` and `}}`
 - **`blade.escapedContentTags`** - *array*, default `{{{` and `}}}`
 
+#### Skipping minification
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fitztrev/laravel-html-minify/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+To prevent the minification of a view file, add `skipmin` somewhere in the view.
 
+```
+{{-- skipmin --}}
+<!-- skipmin -->
+```
