@@ -33,7 +33,7 @@ class LaravelHtmlMinifyServiceProvider extends ServiceProvider
         $app->view->getEngineResolver()->register(
             'blade.php',
             function () use ($app) {
-                    $cachePath = $app['path'].'/storage/views';
+                    $cachePath = storage_path() . '/views';
                     $compiler  = new LaravelHtmlMinifyCompiler(
                         $app->make('config')->get('laravel-html-minify::config'),
                         $app['files'],
