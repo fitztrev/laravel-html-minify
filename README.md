@@ -1,4 +1,12 @@
+## UPDATE for Laravel 5/5.1+
+
+Read my preferred way of minifying HTML in Laravel 5/5.1+ apps here: [Using Gulp to Minify Laravel Blade Templates](https://github.com/fitztrev/laravel-html-minify/wiki/Laravel-5---5.1-HTML-Minifying)
+
+---
+
 # Laravel HTML Minify
+
+### For Laravel 4 - See [here](https://github.com/fitztrev/laravel-html-minify/wiki/Laravel-5---5.1-HTML-Minifying) for L5+
 
 [![Build Status](https://travis-ci.org/fitztrev/laravel-html-minify.png)](https://travis-ci.org/fitztrev/laravel-html-minify)
 [![Total Downloads](https://poser.pugx.org/fitztrev/laravel-html-minify/downloads.png)](https://packagist.org/packages/fitztrev/laravel-html-minify)
